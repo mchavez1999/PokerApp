@@ -8,27 +8,121 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.login.ListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
+    <TextView
+        android:id="@+id/userID"
+        android:layout_width="198dp"
+        android:layout_height="52dp"
+        android:text="Username:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/passID"
+        android:layout_width="201dp"
+        android:layout_height="72dp"
+        android:text="Password:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userID"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/dateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="DATE"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/passID" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="201dp"
+        android:layout_height="45dp"
+        android:text="Date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passID" />
+
+    <EditText
+        android:id="@+id/blindValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="BLIND"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/blind"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/blind"
+        android:layout_width="201dp"
+        android:layout_height="45dp"
+        android:text="Blind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/buyin"
+        android:layout_width="201dp"
+        android:layout_height="48dp"
+        android:text="Buyin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blind" />
+
+    <EditText
+        android:id="@+id/buyinValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="BUYIN"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/buyin"
+        app:layout_constraintTop_toBottomOf="@+id/blind" />
+
+    <TextView
+        android:id="@+id/cashout"
+        android:layout_width="201dp"
+        android:layout_height="55dp"
+        android:text="Cashout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buyin" />
+
+    <EditText
+        android:id="@+id/cashoutValue"
+        android:layout_width="205dp"
+        android:layout_height="54dp"
+        android:ems="10"
+        android:hint="CASHOUT"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/cashout"
+        app:layout_constraintTop_toBottomOf="@+id/buyin" />
+
+    <Button
+        android:id="@+id/addGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Game"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cashout" />
+
+    <TextView
+        android:id="@+id/gameList"
+        android:layout_width="384dp"
+        android:layout_height="264dp"
+        android:text="Games:"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="1.0"
-        tools:itemCount="8"
-        tools:listitem="@layout/recycler_view_item" />
+        app:layout_constraintTop_toBottomOf="@+id/addGame" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/showGames"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Show Games"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cashout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

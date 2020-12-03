@@ -2,15 +2,20 @@ package com.example.pokerproject.ui.login
 
 import java.util.*
 
-data class Game(val game_status: status, val gtype: game_type, val startTime: Date, val endTime: Date, val location: String, val buyIn: Int, val cashOut: Int, val blindSize: Int ) {
-    enum class status { 
-        IN_PROGRESS, COMPLETED, 
+class Game(dateOfGame: String, blindVal: Double, buyinVal: Double, cashoutVal: Double) {
+    var date: String = dateOfGame
+    var blind = 0.0
+    var buyin = 0.0
+    var cashout = 0.0
+
+    init{
+        blind = blindVal
+        buyin = buyinVal
+        cashout = cashoutVal
     }
 
-
-    enum class game_type {
-        TEXAS, OMAHA, DRAW, SEVCARDSTUD
+    override fun toString(): String {
+        return "Date: $date\nBlind: $blind\nBuyin$buyin\nCashout: $cashout"
     }
-
-
 }
+
