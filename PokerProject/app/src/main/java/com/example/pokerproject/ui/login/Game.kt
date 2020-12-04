@@ -1,8 +1,11 @@
 package com.example.pokerproject.ui.login
 
+import android.os.Parcel
+import android.os.Parcelable
+import java.io.Serializable
 import java.util.*
 
-class Game(dateOfGame: String, blindVal: Double, buyinVal: Double, cashoutVal: Double) {
+class Game(dateOfGame: String, blindVal: Double, buyinVal: Double, cashoutVal: Double) : Serializable {
     var date: String = dateOfGame
     var blind = 0.0
     var buyin = 0.0
@@ -15,7 +18,7 @@ class Game(dateOfGame: String, blindVal: Double, buyinVal: Double, cashoutVal: D
     }
 
     override fun toString(): String {
-        return "Date: $date\nBlind: $blind\nBuyin$buyin\nCashout: $cashout"
+        return "Date: \t\t\t\t$date\nBlind: \t\t\t\t$blind\nBuyin: \t\t\t\t$buyin\nCashout: \t$cashout"
     }
 }
 

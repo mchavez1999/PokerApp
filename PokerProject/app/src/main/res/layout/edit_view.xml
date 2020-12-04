@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.login.CreateGameActivity">
+    tools:context=".ui.login.EditGameActivity">
 
     <!-- Just a little buffer at the top, figure we can add in a logo here or something -->
     <TextView
         android:id="@+id/buffer"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:gravity="center"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -88,31 +89,18 @@
         app:layout_constraintTop_toBottomOf="@+id/buyin" />
 
     <Button
-        android:id="@+id/addGame"
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Game"
+        android:text="Submit Changes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cashout" />
 
-    <!--
-    <TextView
-        android:id="@+id/gameList"
-        android:layout_width="384dp"
-        android:layout_height="264dp"
-        android:text="Games:"
-        android:scrollbars = "vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addGame" />
-     -->
-
     <Button
-        android:id="@+id/showGames"
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Games"
+        android:text="DELETE GAME"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cashout" />
 

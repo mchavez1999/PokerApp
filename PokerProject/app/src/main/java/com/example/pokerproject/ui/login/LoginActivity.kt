@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             editor.putString(username, password)
             editor.putString(userpass, json)
             editor.apply();
-            val intent = Intent(this, ListActivity::class.java).putExtra("Username", username).putExtra("Password", password)
+            val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
             startActivity(intent)
         }
     }
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         }else if(!sharedpreferences.getString(username, null).equals(password)) {
             Toast.makeText(this, "Error: Incorrect password", Toast.LENGTH_SHORT).show()
         }else{
-            val intent = Intent(this, ListActivity::class.java).putExtra("Username", username).putExtra("Password", password)
+            val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
             startActivity(intent)
         }
     }

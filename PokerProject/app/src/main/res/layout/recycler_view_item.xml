@@ -4,37 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".ui.login.ShowGamesActivity">
 
-  <LinearLayout
-      android:layout_width="408dp"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:orientation="vertical"
-      android:padding="5dp">
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/gameContainer"
+        android:layout_width="408dp"
         android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem[3]" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem[4]" />
 
-    <TextView
-        android:id="@+id/gType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem[2]" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/winnings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem[2]" />
-  </LinearLayout>
+  </ScrollView>
 </LinearLayout>
