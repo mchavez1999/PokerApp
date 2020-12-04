@@ -46,6 +46,12 @@ class LoginActivity : AppCompatActivity() {
         var json = gson.toJson(gameList)
         val editor = sharedpreferences.edit()
 
+        // check for valid passwords
+        if (!validPassword(password)) {
+            Toast.makeText(this, "Invalid Password.\nRequirements: Minimum of 6 Characters, 1 Letter, and 1 Number", Toast.LENGTH_LONG).show()
+            return
+        }
+
         if(sharedpreferences.contains(username)){
             Toast.makeText(this, "Error: User already exists", Toast.LENGTH_SHORT).show()
         }else{
@@ -72,6 +78,19 @@ class LoginActivity : AppCompatActivity() {
         sharedpreferences.edit().clear().commit();
         Toast.makeText(this, "User Data Cleared", Toast.LENGTH_SHORT).show()
     }
+
+    // check for valid passwords
+    private fun validPassword(password: String?) : Boolean {
+        return if (password.isNullOrEmpty()) {
+            false
+        } else {
+            // Min 6 char, 1 letter, 1 number
+            val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}\$")
+            passwordRegex.matches(password)
+        }
+    }
+
+
 
     companion object {
         val mypreference = "mypref"
