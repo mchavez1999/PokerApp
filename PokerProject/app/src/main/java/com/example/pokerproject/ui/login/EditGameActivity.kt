@@ -114,9 +114,10 @@ class EditGameActivity : AppCompatActivity() {
         }
     }
 
-    /* !!! DOES NOT SAVE() PROPERLY !!! */
+    /* deletes a game */
     private fun delete() {
 
+        /* use iterator() to avoid concurrent modification */
         val gameListIter = gameList.iterator()
         while (gameListIter.hasNext()) {
             val game = gameListIter.next()
