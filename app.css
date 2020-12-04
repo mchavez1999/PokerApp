@@ -1,0 +1,12 @@
+html, body {
+    font-family: monospace;
+    color: black;
+    scroll-behavior: smooth;
+    height: 100%;
+    margin: 0;
+    
+}
+
+.cream-bg {
+    background-color: #FAf0DC;
+}

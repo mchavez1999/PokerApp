@@ -53,7 +53,7 @@ class CreateGameActivity : AppCompatActivity() {
 
             // if date is in a valid format, add the game!
             if (!dateValidator(date.text.toString())) {
-                Toast.makeText(this, "Invalid Date Format.\nEx: 12/07/2020", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Invalid Date Format.\nFormat: XX/XX/XXXX\nEX: 12/07/2020", Toast.LENGTH_LONG).show()
             } else if(date.text.toString().trim().isNotEmpty() && blind.text.toString().trim().isNotEmpty() && buyin.text.toString().trim().isNotEmpty() && cashout.text.toString().trim().isNotEmpty()){
                 add(
                     date.text.toString(),
