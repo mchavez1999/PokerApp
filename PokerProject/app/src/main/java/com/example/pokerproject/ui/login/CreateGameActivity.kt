@@ -58,7 +58,7 @@ class CreateGameActivity : AppCompatActivity() {
                     date.text.toString(),
                     blind.text.toString().toDouble(),
                     buyin.text.toString().toDouble(),
-                    cashout.text.toString().toDouble()
+                    cashout.text.toString().toDouble(),
                 );
 
                 // success game added toast
@@ -74,7 +74,11 @@ class CreateGameActivity : AppCompatActivity() {
 
             // see if there are any games to show, If so, start activity
             if (gameList.isNotEmpty()) {
-                val intent = Intent(applicationContext, ShowGamesActivity::class.java).putExtra("GameList", gameList)
+                val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+                    .putExtra("GameList", gameList)
+                    .putExtra("username", username)
+                    .putExtra("password", password)
+                    .putExtra("userpass", userpass)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "No Games to Show. Add Game(s).", Toast.LENGTH_SHORT).show()
@@ -83,22 +87,8 @@ class CreateGameActivity : AppCompatActivity() {
     }
 
     private fun add(date: String, blind: Double, buyin: Double, cashout: Double){
-        gameList.add(Game(date, blind, buyin, cashout))
+        gameList.add(Game(date, blind, buyin, cashout, gameList.size))
         save()
-    }
-
-    private fun showGames(){
-        var text = ""
-        var count = 1
-        for(g in gameList){
-            text += "Game: $count\n$g\n\n"
-            count++
-        }
-        if(text.isEmpty()){
-            text = "Games: None"
-            Toast.makeText(this, "No games to show", Toast.LENGTH_SHORT).show()
-        }
-        gameText.text = text
     }
 
     private fun save(){
@@ -109,16 +99,9 @@ class CreateGameActivity : AppCompatActivity() {
         editor.apply();
     }
 
-    // accepts a bunch of different date formats:
-    // Ex: 12/07/2020 | 12/07/20 | 12.07.2020 | 12.07.20 | 12-07-2020 | 12-07-20
+    // Ex: 12/07/2020
     private fun dateValidator(date: String) : Boolean {
-        val dateRegex = Regex("^(?:(?:31(\\/|-|\\.)" +
-                "(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)" +
-                "(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})" +
-                "\$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?" +
-                "(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))\$|" +
-                "^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4" +
-                "(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$")
+        val dateRegex = Regex("^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d\$")
         return dateRegex.matches(date)
     }
 
