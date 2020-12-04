@@ -135,6 +135,7 @@ class EditGameActivity : AppCompatActivity() {
                     val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
                     startActivity(intent)
                 } else {
+                    Toast.makeText(this, "Deleted Game ID: $gameID", Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, ShowGamesActivity::class.java)
                         .putExtra("GameList", gameList)
                         .putExtra("username", username)
