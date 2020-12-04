@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.pokerproject.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlin.random.Random
 
 
 class CreateGameActivity : AppCompatActivity() {
@@ -81,13 +82,13 @@ class CreateGameActivity : AppCompatActivity() {
                     .putExtra("userpass", userpass)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "No Games to Show. Add Game(s).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No Games Left.\nAdd Game(s).", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun add(date: String, blind: Double, buyin: Double, cashout: Double){
-        gameList.add(Game(date, blind, buyin, cashout, gameList.size))
+        gameList.add(Game(date, blind, buyin, cashout, Random.nextInt(1000)))
         save()
     }
 

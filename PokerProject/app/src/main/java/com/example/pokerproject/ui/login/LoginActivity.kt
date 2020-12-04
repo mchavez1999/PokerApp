@@ -12,9 +12,14 @@ import android.widget.Toast
 
 import com.example.pokerproject.R
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class LoginActivity : AppCompatActivity() {
     lateinit var sharedpreferences: SharedPreferences
+    inline fun <reified T> Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
+        json,
+        object : TypeToken<ArrayList<Game>>() {}.type
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +71,28 @@ class LoginActivity : AppCompatActivity() {
     private fun Login(username: String, password: String) {
         if(!sharedpreferences.contains(username)){
             Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show()
-        }else if(!sharedpreferences.getString(username, null).equals(password)) {
+        } else if(!sharedpreferences.getString(username, null).equals(password)) {
             Toast.makeText(this, "Error: Incorrect password", Toast.LENGTH_SHORT).show()
-        }else{
-            val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
-            startActivity(intent)
+        } else{
+
+            var userpass = username+password
+            var json = sharedpreferences.getString(userpass, null)
+            var gameList = json?.let { Gson().fromJson<Game>(it) }!!
+
+            // is user has game, then go to ShowGameActivity, otherwise go to CreateGameActivity
+            if (gameList.isNotEmpty()) {
+                val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+                    .putExtra("GameList", gameList)
+                    .putExtra("username", username)
+                    .putExtra("password", password)
+                    .putExtra("userpass", userpass)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, CreateGameActivity::class.java)
+                    .putExtra("Username", username)
+                    .putExtra("Password", password)
+                startActivity(intent)
+            }
         }
     }
 

@@ -65,7 +65,7 @@ class EditGameActivity : AppCompatActivity() {
         val submitBtn = findViewById<Button>(R.id.submit)
         val deleteBtn = findViewById<Button>(R.id.delete)
 
-        // so when these buttons are clicked I would need to change this user's JSON
+        // submit edits
         submitBtn.setOnClickListener {
             if(date.text.toString().trim().isNotEmpty() && blind.text.toString().trim().isNotEmpty() && buyIn.text.toString().trim().isNotEmpty() && cashOut.text.toString().trim().isNotEmpty()){
                 submit(
@@ -80,14 +80,18 @@ class EditGameActivity : AppCompatActivity() {
             }
         }
 
+        // delete game
         deleteBtn.setOnClickListener {
             delete()
         }
     }
 
     private fun submit(date: String, blind: Double, buyin: Double, cashout: Double) {
+
+        // search each game
         for (game in gameList) {
-            // if we find our game we want to delete
+
+            // if we find our game we want to edit
             if (game.ID == gameID) {
 
                 // set fields
@@ -110,20 +114,23 @@ class EditGameActivity : AppCompatActivity() {
         }
     }
 
+    /* !!! DOES NOT SAVE() PROPERLY !!! */
     private fun delete() {
 
-        // search through each game
-        for (game in gameList) {
+        val gameListIter = gameList.iterator()
+        while (gameListIter.hasNext()) {
+            val game = gameListIter.next()
 
             // if we find our game we want to delete
             if (game.ID == gameID) {
 
                 // delete it and save() our deletion
-                gameList.remove(game)
+                gameListIter.remove()
                 save()
 
                 // upon deletion, either return to ShowGameActivity or CreateGameActivity (if no games are left)
                 if (gameList.isEmpty()) {
+                    Toast.makeText(this, "No Games Left.\nAdd Game(s).", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
                     startActivity(intent)
                 } else {
@@ -138,6 +145,36 @@ class EditGameActivity : AppCompatActivity() {
 
             }
         }
+
+        /*
+        // search through each game
+        for (game in gameList) {   ERROR IS HERE, ConcurrentModificationException
+
+            // if we find our game we want to delete
+            if (game.ID == gameID) {
+
+                // delete it and save() our deletion
+                gameList.remove(game)
+                save()
+
+                // upon deletion, either return to ShowGameActivity or CreateGameActivity (if no games are left)
+                if (gameList.isEmpty()) {
+                    Toast.makeText(this, "No Games Left.\nAdd Game(s).", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+                        .putExtra("GameList", gameList)
+                        .putExtra("username", username)
+                        .putExtra("password", password)
+                        .putExtra("userpass", userpass)
+                    startActivity(intent)
+                }
+
+
+            }
+        }
+        */
     }
 
     // should make updated to sharedpreferences
@@ -146,6 +183,7 @@ class EditGameActivity : AppCompatActivity() {
         var gson = Gson()
         var json = gson.toJson(gameList)
         editor.putString(userpass, json)
-        editor.apply();
+        // editor.apply();
+        editor.commit()
     }
 }

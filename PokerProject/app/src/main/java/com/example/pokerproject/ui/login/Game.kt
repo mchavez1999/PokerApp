@@ -20,7 +20,7 @@ class Game(dateOfGame: String, blindVal: Double, buyinVal: Double, cashoutVal: D
     }
 
     override fun toString(): String {
-        return "Date: \t\t\t\t$date\nBlind: \t\t\t\t$blind\nBuyin: \t\t\t\t$buyin\nCashout: \t$cashout"
+        return "Date: \t\t\t\t$date\nBlind: \t\t\t\t$blind\nBuy-in: \t\t\t$buyin\nCashout: \t$cashout"
     }
 }
 
