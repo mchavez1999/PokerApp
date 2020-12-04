@@ -142,40 +142,8 @@ class EditGameActivity : AppCompatActivity() {
                         .putExtra("userpass", userpass)
                     startActivity(intent)
                 }
-
-
             }
         }
-
-        /*
-        // search through each game
-        for (game in gameList) {   ERROR IS HERE, ConcurrentModificationException
-
-            // if we find our game we want to delete
-            if (game.ID == gameID) {
-
-                // delete it and save() our deletion
-                gameList.remove(game)
-                save()
-
-                // upon deletion, either return to ShowGameActivity or CreateGameActivity (if no games are left)
-                if (gameList.isEmpty()) {
-                    Toast.makeText(this, "No Games Left.\nAdd Game(s).", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(applicationContext, ShowGamesActivity::class.java)
-                        .putExtra("GameList", gameList)
-                        .putExtra("username", username)
-                        .putExtra("password", password)
-                        .putExtra("userpass", userpass)
-                    startActivity(intent)
-                }
-
-
-            }
-        }
-        */
     }
 
     // should make updated to sharedpreferences
