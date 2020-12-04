@@ -67,7 +67,17 @@ class EditGameActivity : AppCompatActivity() {
 
         // so when these buttons are clicked I would need to change this user's JSON
         submitBtn.setOnClickListener {
-            submit()
+            if(date.text.toString().trim().isNotEmpty() && blind.text.toString().trim().isNotEmpty() && buyIn.text.toString().trim().isNotEmpty() && cashOut.text.toString().trim().isNotEmpty()){
+                submit(
+                    date.text.toString(),
+                    blind.text.toString().toDouble(),
+                    buyIn.text.toString().toDouble(),
+                    cashOut.text.toString().toDouble(),
+                );
+
+                // success game added toast
+                Toast.makeText(this, "Successful Edits to Game ID: $gameID", Toast.LENGTH_SHORT).show()
+            }
         }
 
         deleteBtn.setOnClickListener {
@@ -75,8 +85,29 @@ class EditGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun submit() {
-        Toast.makeText(this, "Not Implemented yet, my bad lol", Toast.LENGTH_SHORT).show()
+    private fun submit(date: String, blind: Double, buyin: Double, cashout: Double) {
+        for (game in gameList) {
+            // if we find our game we want to delete
+            if (game.ID == gameID) {
+
+                // set fields
+                game.date = date
+                game.blind = blind
+                game.buyin = buyin
+                game.cashout = cashout
+
+                // save in sharedPref
+                save()
+
+                // start ShowGamesActivity
+                val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+                    .putExtra("GameList", gameList)
+                    .putExtra("username", username)
+                    .putExtra("password", password)
+                    .putExtra("userpass", userpass)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun delete() {
