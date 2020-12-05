@@ -79,6 +79,9 @@ class LoginActivity : AppCompatActivity() {
             var json = sharedpreferences.getString(userpass, null)
             var gameList = json?.let { Gson().fromJson<Game>(it) }!!
 
+            // Welcome Message
+            Toast.makeText(this, "Welcome $username!", Toast.LENGTH_SHORT).show()
+
             // is user has game, then go to ShowGameActivity, otherwise go to CreateGameActivity
             if (gameList.isNotEmpty()) {
                 val intent = Intent(applicationContext, ShowGamesActivity::class.java)
