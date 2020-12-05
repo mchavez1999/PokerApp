@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokerproject.R
 import com.google.gson.Gson
@@ -47,13 +46,37 @@ class EditGameActivity : AppCompatActivity() {
 
         // get all relevant fields
         val date = findViewById<TextView>(R.id.dateValue)
-        val blind = findViewById<TextView>(R.id.blindValue)
+        val smallblind = findViewById<TextView>(R.id.smallBlindValue)
+        val bigblind = findViewById<TextView>(R.id.bigBlindValue)
         val buyIn = findViewById<TextView>(R.id.buyinValue)
         val cashOut = findViewById<TextView>(R.id.cashoutValue)
+        val location = findViewById<TextView>(R.id.locValue)
+        val gameTypes = resources.getStringArray(R.array.GameTypes)
+        val duration = findViewById<TextView>(R.id.durValue)
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        var pos = 0
+        if (spinner != null) {
+            val adapter = ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, gameTypes)
+            spinner.adapter = adapter
+            pos = adapter.getPosition(game.gameType);
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                }
+            }
+        }
 
         // set relevant fields
         date.text = game.date
-        blind.text = game.blind.toString()
+        location.text = game.location
+        spinner.setSelection(pos)
+        duration.text = game.dur.toString()
+        smallblind.text = game.smallBlind.toString()
+        bigblind.text = game.bigBlind.toString()
         buyIn.text = game.buyin.toString()
         cashOut.text = game.cashout.toString()
 
@@ -67,10 +90,16 @@ class EditGameActivity : AppCompatActivity() {
 
         // submit edits
         submitBtn.setOnClickListener {
-            if(date.text.toString().trim().isNotEmpty() && blind.text.toString().trim().isNotEmpty() && buyIn.text.toString().trim().isNotEmpty() && cashOut.text.toString().trim().isNotEmpty()){
+            if (!dateValidator(date.text.toString())) {
+                Toast.makeText(this, "Invalid Date Format.\nFormat: XX/XX/XXXX\nEX: 12/07/2020", Toast.LENGTH_LONG).show()
+            } else if(date.text.toString().trim().isNotEmpty() && location.text.toString().trim().isNotEmpty() && duration.text.toString().trim().isNotEmpty() && smallblind.text.toString().trim().isNotEmpty() && bigblind.text.toString().trim().isNotEmpty() && buyIn.text.toString().trim().isNotEmpty() && cashOut.text.toString().trim().isNotEmpty()){
                 submit(
                     date.text.toString(),
-                    blind.text.toString().toDouble(),
+                    location.text.toString(),
+                    duration.text.toString().toDouble(),
+                    spinner.selectedItem.toString(),
+                    smallblind.text.toString().toDouble(),
+                    bigblind.text.toString().toDouble(),
                     buyIn.text.toString().toDouble(),
                     cashOut.text.toString().toDouble(),
                 );
@@ -86,7 +115,7 @@ class EditGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun submit(date: String, blind: Double, buyin: Double, cashout: Double) {
+    private fun submit(date: String, location: String, duration: Double, gametype: String, smallblind: Double, bigblind: Double, buyin: Double, cashout: Double){
 
         // search each game
         for (game in gameList) {
@@ -96,7 +125,11 @@ class EditGameActivity : AppCompatActivity() {
 
                 // set fields
                 game.date = date
-                game.blind = blind
+                game.location = location
+                game.dur = duration
+                game.gameType = gametype
+                game.smallBlind = smallblind
+                game.bigBlind = bigblind
                 game.buyin = buyin
                 game.cashout = cashout
 
@@ -110,6 +143,7 @@ class EditGameActivity : AppCompatActivity() {
                     .putExtra("password", password)
                     .putExtra("userpass", userpass)
                 startActivity(intent)
+                finish()
             }
         }
     }
@@ -155,5 +189,10 @@ class EditGameActivity : AppCompatActivity() {
         editor.putString(userpass, json)
         // editor.apply();
         editor.commit()
+    }
+
+    private fun dateValidator(date: String) : Boolean {
+        val dateRegex = Regex("^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d\$")
+        return dateRegex.matches(date)
     }
 }

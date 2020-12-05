@@ -1,28 +1,21 @@
 package com.example.pokerproject.ui.login
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
-import androidx.core.view.setPadding
 import com.example.pokerproject.R
-import org.w3c.dom.Text
 
 
 class ShowGamesActivity : AppCompatActivity() {
 
-    var color = intArrayOf(10, 30, 50, 70, 90, 110, 130, 150)
-    var colorIdx = 0
-    var idxOP = 1
+    var color = intArrayOf(10, 30)
+    var colorIdx = 1
     private lateinit var userpass : String
     private lateinit var username : String
     private lateinit var password : String
@@ -59,7 +52,7 @@ class ShowGamesActivity : AppCompatActivity() {
     }
 
     // build our UI, which is list of games
-    private fun buildUI(gameList : ArrayList<Game>) {
+    private fun buildUI(gameList: ArrayList<Game>) {
 
         // get linear layout view
         var linearView = findViewById<LinearLayout>(R.id.gameContainer)
@@ -80,19 +73,12 @@ class ShowGamesActivity : AppCompatActivity() {
     private fun buildGameView(game: Game, ID: Int) : TextView {
 
         // handling cascading colors, just cause
-        when (colorIdx) {
+        colorIdx = when (colorIdx) {
             0 -> {
-                idxOP = 1
-                colorIdx += idxOP
+                1
             }
-
-            color.size - 1 -> {
-                idxOP = -1
-                colorIdx += idxOP
-            }
-
             else -> {
-                colorIdx += idxOP
+                0
             }
         }
 
@@ -106,17 +92,18 @@ class ShowGamesActivity : AppCompatActivity() {
         gameView.id = ID
 
         // set height
-        gameView.height = 300
+        gameView.height = 275
 
         // set bg/text color
         gameView.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue))
         gameView.setTextColor(Color.WHITE)
 
         // set text
-        gameView.text = "Game ID: \t$ID\n$game"
+        gameView.text = "Game ID: \t\t\t\t$ID\n$game"
 
-        // set margin top
-        gameView.setPadding(40, 20, 20, 0)
+        // set margin top and bottom
+        gameView.setPadding(40, 10, 20, 10)
+
 
         // setting each onClickListeners for edit/delete
         gameView.setOnClickListener {
@@ -130,5 +117,16 @@ class ShowGamesActivity : AppCompatActivity() {
         }
 
         return gameView
+    }
+
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Closing Activity")
+            .setMessage("Are you sure you want to exit the app?")
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, which -> finish() })
+            .setNegativeButton("No", null)
+            .show()
     }
 }

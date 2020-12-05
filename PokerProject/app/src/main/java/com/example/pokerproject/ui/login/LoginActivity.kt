@@ -90,11 +90,13 @@ class LoginActivity : AppCompatActivity() {
                     .putExtra("password", password)
                     .putExtra("userpass", userpass)
                 startActivity(intent)
+                finish()
             } else {
                 val intent = Intent(this, CreateGameActivity::class.java)
                     .putExtra("Username", username)
                     .putExtra("Password", password)
                 startActivity(intent)
+                finish()
             }
         }
     }

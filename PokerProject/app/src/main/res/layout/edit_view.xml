@@ -11,10 +11,11 @@
     <!-- Just a little buffer at the top, figure we can add in a logo here or something -->
     <TextView
         android:id="@+id/buffer"
-        android:text=""
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:gravity="center"
+        android:text="Create a Game"
+        android:textSize="25dp"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -31,41 +32,99 @@
         android:id="@+id/date"
         android:layout_width="201dp"
         android:layout_height="45dp"
-        android:text="Date"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buffer" />
 
     <EditText
-        android:id="@+id/blindValue"
+        android:id="@+id/locValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="BLIND"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/blind"
+        android:hint="LOCATION"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/loc"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <TextView
-        android:id="@+id/blind"
+        android:id="@+id/loc"
         android:layout_width="201dp"
         android:layout_height="45dp"
-        android:text="Blind"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <EditText
+        android:id="@+id/durValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="DURATION"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/dur"
+        app:layout_constraintTop_toBottomOf="@+id/loc" />
+
+    <TextView
+        android:id="@+id/dur"
+        android:layout_width="201dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Duration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loc" />
+
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="201dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Game Type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dur" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="190dp"
+        android:layout_height="45dp"
+        app:layout_constraintStart_toEndOf="@+id/type"
+        app:layout_constraintTop_toBottomOf="@+id/dur" />
+
+    <EditText
+        android:id="@+id/smallBlindValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="SMALL BLIND"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/smallBlind"
+        app:layout_constraintTop_toBottomOf="@+id/type" />
+
+    <TextView
+        android:id="@+id/smallBlind"
+        android:layout_width="201dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Small Blind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/type" />
 
     <TextView
         android:id="@+id/buyin"
         android:layout_width="201dp"
         android:layout_height="48dp"
-        android:text="Buyin"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Buyin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/blind" />
+        app:layout_constraintTop_toBottomOf="@+id/bigBlind" />
 
     <EditText
         android:id="@+id/buyinValue"
@@ -75,15 +134,15 @@
         android:hint="BUYIN"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/buyin"
-        app:layout_constraintTop_toBottomOf="@+id/blind" />
+        app:layout_constraintTop_toBottomOf="@+id/bigBlind" />
 
     <TextView
         android:id="@+id/cashout"
         android:layout_width="201dp"
         android:layout_height="55dp"
-        android:text="Cashout"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Cashout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buyin" />
 
@@ -96,6 +155,27 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/cashout"
         app:layout_constraintTop_toBottomOf="@+id/buyin" />
+
+    <TextView
+        android:id="@+id/bigBlind"
+        android:layout_width="201dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="Big Blind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smallBlind"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <EditText
+        android:id="@+id/bigBlindValue"
+        android:layout_width="205dp"
+        android:layout_height="54dp"
+        android:ems="10"
+        android:hint="BIG BLIND"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/bigBlind"
+        app:layout_constraintTop_toBottomOf="@+id/smallBlindValue" />
 
     <Button
         android:id="@+id/submit"
@@ -120,10 +200,10 @@
     <ImageView
         android:layout_width="256dp"
         android:layout_height="306dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="68dp"
+
         android:src="@drawable/icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete" />
+        app:layout_constraintTop_toBottomOf="@+id/cashout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
