@@ -12,13 +12,12 @@
     tools:context=".ui.login.LoginActivity">
 
     <TextView
-        android:layout_width="397dp"
-        android:layout_height="85dp"
-        android:text="Poker Game Session Tracker"
+        android:layout_width="375dp"
+        android:layout_height="103dp"
         android:gravity="center"
-        tools:layout_editor_absoluteX="-8dp"
-        tools:layout_editor_absoluteY="-10dp"
-        tools:ignore="MissingConstraints" />
+        android:text="Poker Game Session Tracker"
+        app:layout_constraintBottom_toTopOf="@id/username"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/username"
