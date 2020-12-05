@@ -25,7 +25,7 @@ class GraphStatsActivity : AppCompatActivity() {
     val entries = ArrayList<Entry>()
     var minBlind: Float = 0f
     var maxBlind: Float = 100f
-    var minDate : LocalDate = LocalDate.from(Calendar.getInstance().time)
+    var minDate : Date = Calendar.getInstance().time
     var maxDate : Date = Calendar.getInstance().time
     var username: String = "help"
     fun Float.toString(numOfDec: Int): String {
@@ -85,10 +85,10 @@ class GraphStatsActivity : AppCompatActivity() {
             text.text = txt
         })
         datRange.setOnRangeBarChangeListener(OnRangeBarChangeListener { range, leftThumbIndex, rightThumbIndex ->
-            val lowerBlind :Float = ((maxDate.until(minDate) minDate)/49) * leftThumbIndex + minBlind
-            val uppBlind: Float = (((maxBlind - minBlind)/49) * rightThumbIndex + minBlind)
-            val txt : String = "\$${lowerBlind.toString(2)},  \$${uppBlind.toString(2)}"
-            text.text = txt
+            //val lowerBlind :Float = ((maxDate.until(minDate) minDate)/49) * leftThumbIndex + minBlind
+            //val uppBlind: Float = (((maxBlind - minBlind)/49) * rightThumbIndex + minBlind)
+            //val txt : String = "\$${lowerBlind.toString(2)},  \$${uppBlind.toString(2)}"
+           // text.text = txt
         })
         // get the legend (only possible after setting data)
     }
