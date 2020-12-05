@@ -14,4 +14,6 @@
     <color name="color8">#969696</color>
     <color name="color9">#AAAAAA</color>
     <color name="color10">#BEBEBE</color>
+    <color name="colorDark">#463433</color>
+    <color name="colorLight">#FDC3BF</color>
 </resources>

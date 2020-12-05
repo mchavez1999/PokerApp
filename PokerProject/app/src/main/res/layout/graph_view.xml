@@ -1,6 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        android:background="@drawable/gradient_bg"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:padding="9dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart2"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:padding="9dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textGameTypes"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:isScrollContainer="false"
+                android:text="Game Types:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDateRange" />
+
+            <com.edmodo.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rangebar"
+                android:layout_height="20dp"
+                android:layout_marginStart="47dp"
+                android:layout_marginEnd="30dp"
+                android:tooltipText="help"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/TextBlindSize"
+                app:layout_constraintTop_toTopOf="@+id/TextBlindSize"
+                custom:tickCount="15"
+                android:layout_width="210dp" />
+
+            <com.edmodo.rangebar.RangeBar
+                android:id="@+id/rangebar2"
+                android:layout_height="20dp"
+                android:layout_marginStart="47dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:tooltipText="help"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textDateRange"
+                app:layout_constraintTop_toTopOf="@+id/textDateRange"
+                android:layout_width="210dp" />
+
+            <TextView
+                android:id="@+id/TextBlindSize"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:isScrollContainer="false"
+                android:text="Blind Size"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textDateRange"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:isScrollContainer="false"
+                android:text="Date Range"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextBlindSize" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="0dp"
+                android:layout_height="211dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textGameTypes"
+                app:layout_constraintTop_toTopOf="@+id/textGameTypes">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/texas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Texas Hold'Em" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/omaha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Omaha No Limit"
+                    app:chipSurfaceColor="@color/colorLight" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Game 3" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Game 4" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Game 5" />
+            </com.google.android.material.chip.ChipGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </LinearLayout>
