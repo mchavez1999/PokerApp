@@ -6,11 +6,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
+    android:background="@drawable/gradient_bg"
     tools:context=".ui.login.ShowGamesActivity">
 
   <ScrollView
       android:id="@+id/scroll"
       android:layout_width="match_parent"
+      android:background="@drawable/gradient_bg"
       android:layout_height="match_parent">
 
     <LinearLayout

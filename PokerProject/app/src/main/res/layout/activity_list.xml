@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/gradient_bg"
+
     tools:context=".ui.login.CreateGameActivity">
 
     <!-- Just a little buffer at the top, figure we can add in a logo here or something -->

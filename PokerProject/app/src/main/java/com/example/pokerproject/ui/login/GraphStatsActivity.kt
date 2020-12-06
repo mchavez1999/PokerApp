@@ -8,8 +8,7 @@ import com.edmodo.rangebar.RangeBar
 import com.edmodo.rangebar.RangeBar.OnRangeBarChangeListener
 import com.example.pokerproject.R
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -20,9 +19,6 @@ import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.graph_view.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -53,7 +49,7 @@ class GraphStatsActivity : AppCompatActivity() {
     var maxSelectedBlind: Float = Float.MIN_VALUE
     var minSelectedDate : LocalDate = minDate
     var maxSelectedDate : LocalDate = maxDate
-    val MAGIC: Long = 86400000L
+    val dtFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
     var selectedGameTypes : String = " "
     lateinit var gameList: ArrayList<pGame>
     lateinit var gameList1: ArrayList<Game>
@@ -76,15 +72,12 @@ class GraphStatsActivity : AppCompatActivity() {
         stud = findViewById(R.id.stud)
         omaha = findViewById(R.id.omaha)
         chipGroup = findViewById(R.id.help)
-        stardDatetv = findViewById(R.id.startDate)
-        endDatetv = findViewById(R.id.endDate)
         brange = findViewById(R.id.bRange)
         drange = findViewById(R.id.bRange2)
         tHold.setOnCheckedChangeListener { buttonView, isChecked ->  updateGameTypes() }
         draw.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
         stud.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
         omaha.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
-        chipGroup.setOnCheckedChangeListener( ChipGroup.OnCheckedChangeListener {k,v -> updateGameTypes() })
         title = "LineChartTime"
         gameList1 = intent.getSerializableExtra("gamelist") as ArrayList<Game>
         gameList = makePList(gameList1)
@@ -113,8 +106,10 @@ class GraphStatsActivity : AppCompatActivity() {
             plot()
         })
         datRange.setOnRangeBarChangeListener(OnRangeBarChangeListener { range, leftThumbIndex, rightThumbIndex ->
-            minSelectedDate = LocalDate.ofEpochDay((maxDate.toEpochDay()-minDate.toEpochDay())/49 * leftThumbIndex + minDate.toEpochDay() - 20)
-            maxSelectedDate = LocalDate.ofEpochDay( + (maxDate.toEpochDay()-minDate.toEpochDay())/47 * rightThumbIndex + minDate.toEpochDay())
+            minSelectedDate =
+                LocalDate.ofEpochDay((maxDate.toEpochDay() - minDate.toEpochDay()) / 49 * leftThumbIndex + minDate.toEpochDay() - 20)
+            maxSelectedDate =
+                LocalDate.ofEpochDay(+(maxDate.toEpochDay() - minDate.toEpochDay()) / 47 * rightThumbIndex + minDate.toEpochDay())
             plot()
         })
     }
@@ -135,8 +130,7 @@ class GraphStatsActivity : AppCompatActivity() {
     private fun plot() {
         val blindText = "$${minSelectedBlind.toString(2)} --- $${maxSelectedBlind.toString(2)}"
         brange.text = blindText
-        val dateText = minSelectedDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")) + " --- " + maxSelectedDate.format(
-            DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        val dateText = minSelectedDate.format(dtFormat) + " --- " + maxSelectedDate.format(dtFormat)
         drange.text = dateText
         gameList = makePList(gameList1)
         gameList = filter(gameList)
@@ -149,9 +143,11 @@ class GraphStatsActivity : AppCompatActivity() {
         linechart2.data = LineData(v2)
         linechart.resetZoom()
         linechart.axisRight.setDrawLabels(false)
-        linechart2.xAxis.setDrawLabels(false)
-        linechart2.axisRight.setDrawLabels(false)
         linechart.xAxis.setDrawLabels(false)
+        linechart2.axisRight.setDrawLabels(false)
+        linechart2.xAxis.setDrawLabels(true)
+        linechart2.xAxis.setLabelCount(5, true)
+        linechart2.xAxis.valueFormatter = formatter as ValueFormatter?
         linechart2.resetZoom()
         linechart.description.isEnabled = false
         lineChart2.description.isEnabled = false
@@ -175,9 +171,9 @@ class GraphStatsActivity : AppCompatActivity() {
         }
         gameList.removeAll(todel)
         if(gameList.size != 0) {
-            stardDatetv.text = gameList.get(0).date.format(DateTimeFormatter.ofPattern("MM/dd/YYYY"))
-            endDatetv.text =
-                gameList.get(gameList.size - 1).date.format(DateTimeFormatter.ofPattern("MM/dd/YYYY"))
+            //stardDatetv.text = gameList.get(0).date.format(dtFormat)
+         //   endDatetv.text =
+         //       gameList.get(gameList.size - 1).date.format(dtFormat)
         }
         return gameList
     }
@@ -191,7 +187,7 @@ class GraphStatsActivity : AppCompatActivity() {
         return ret
     }
     fun toLocalDate(date: String): LocalDate{
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        return LocalDate.parse(date,dtFormat)
     }
     fun plottableList(input: ArrayList<pGame>)  : ArrayList<plottable>{
         var ret :ArrayList<plottable> = arrayListOf<plottable>()
@@ -208,7 +204,7 @@ class GraphStatsActivity : AppCompatActivity() {
                 ret.add(Entry(lst[i].day.toFloat(), lst[i].bigBlindsperHour))
                 continue
             }
-            val avg = (ret[i-1].y*i + lst.get(i).bigBlindsperHour)/(i+1)
+            val avg = (ret[i - 1].y*i + lst.get(i).bigBlindsperHour)/(i+1)
             ret.add(Entry(lst[i].day.toFloat(), avg))
         }
         return ret
@@ -221,10 +217,16 @@ class GraphStatsActivity : AppCompatActivity() {
                 ret.add(Entry(lst[i].day.toFloat(), lst[i].winnings))
                 continue
             }
-            val winnings = (ret[i-1].y + lst.get(i).winnings)
+            val winnings = (ret[i - 1].y + lst.get(i).winnings)
             ret.add(Entry(lst[i].day.toFloat(), winnings))
         }
         return ret
+    }
+    var formatter: ValueFormatter = object : ValueFormatter() {
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            return LocalDate.ofEpochDay(value.toLong()).format(dtFormat)
+        }
+
     }
     class plottable(game: pGame){
         var day : Long = game.date.toEpochDay()
