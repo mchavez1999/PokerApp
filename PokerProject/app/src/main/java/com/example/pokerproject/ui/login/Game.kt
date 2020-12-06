@@ -26,7 +26,7 @@ class Game(dateOfGame: String, location: String, duration: Double, gameType: Str
     }
 
     override fun toString(): String {
-        return "Date: \t\t\t\t\t\t\t$date    DURATION: $dur\nLocation: \t\t\t\t$location    Game Type: \t\t$gameType\nSmall Blind: \t\t$smallBlind    Big Blind: \t\t\t\t$bigBlind\nBuy-in: \t\t\t\t\t\t$buyin    Cashout: \t\t\t\t$cashout"
+        return "Date: \t\t\t\t\t\t\t$date    Duration: $dur hours\nLocation: \t\t\t\t$location    Game Type: \t\t$gameType\nSmall Blind: \t\t$$smallBlind    Big Blind: \t\t$$bigBlind\nBuy-in: \t\t\t\t\t\t$$buyin    Cashout: \t\t\t$$cashout"
     }
 }
 

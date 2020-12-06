@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/buffer"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:text="Create a Game"
         android:textSize="25dp"
@@ -20,8 +20,8 @@
 
     <EditText
         android:id="@+id/dateValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:hint="12/07/2020"
         android:inputType="textPersonName"
@@ -30,9 +30,9 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="201dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
         android:text="Date"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,19 +40,19 @@
 
     <EditText
         android:id="@+id/locValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="LOCATION"
+        android:hint="Casino"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/loc"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <TextView
         android:id="@+id/loc"
-        android:layout_width="201dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
         android:text="Location"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,30 +60,30 @@
 
     <EditText
         android:id="@+id/durValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="DURATION"
+        android:hint="4"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/dur"
         app:layout_constraintTop_toBottomOf="@+id/loc" />
 
     <TextView
         android:id="@+id/dur"
-        android:layout_width="201dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
-        android:text="Duration"
+        android:text="Duration (hrs)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loc" />
 
 
     <TextView
         android:id="@+id/type"
-        android:layout_width="201dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
         android:text="Game Type"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,88 +91,88 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="190dp"
-        android:layout_height="45dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         app:layout_constraintStart_toEndOf="@+id/type"
         app:layout_constraintTop_toBottomOf="@+id/dur" />
 
     <EditText
         android:id="@+id/smallBlindValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="SMALL BLIND"
+        android:hint="1.00"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/smallBlind"
         app:layout_constraintTop_toBottomOf="@+id/type" />
 
     <TextView
         android:id="@+id/smallBlind"
-        android:layout_width="201dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
-        android:text="Small Blind"
+        android:text="Small Blind ($)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/type" />
 
     <TextView
         android:id="@+id/buyin"
-        android:layout_width="201dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
-        android:text="Buyin"
+        android:text="Buyin ($)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bigBlind" />
 
     <EditText
         android:id="@+id/buyinValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="BUYIN"
+        android:hint="100.00"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/buyin"
         app:layout_constraintTop_toBottomOf="@+id/bigBlind" />
 
     <TextView
         android:id="@+id/cashout"
-        android:layout_width="201dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
-        android:text="Cashout"
+        android:text="Cashout ($)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buyin" />
 
     <EditText
         android:id="@+id/cashoutValue"
-        android:layout_width="205dp"
-        android:layout_height="54dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="CASHOUT"
+        android:hint="200.00"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/cashout"
         app:layout_constraintTop_toBottomOf="@+id/buyin" />
 
     <TextView
         android:id="@+id/bigBlind"
-        android:layout_width="201dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
         android:gravity="center_vertical"
-        android:text="Big Blind"
+        android:text="Big Blind ($)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smallBlind"
         tools:layout_editor_absoluteX="10dp" />
 
     <EditText
         android:id="@+id/bigBlindValue"
-        android:layout_width="205dp"
-        android:layout_height="54dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="BIG BLIND"
+        android:hint="2.00"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/bigBlind"
         app:layout_constraintTop_toBottomOf="@+id/smallBlindValue" />
@@ -181,29 +181,28 @@
         android:id="@+id/addGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="28dp"
         android:text="Add Game"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/cashout"
         app:layout_constraintTop_toBottomOf="@+id/cashout" />
 
     <Button
         android:id="@+id/showGames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="84dp"
         android:text="Show Games"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/cashoutValue"
         app:layout_constraintTop_toBottomOf="@+id/cashout" />
 
     <ImageView
-        android:layout_width="256dp"
-        android:layout_height="306dp"
-        android:layout_marginStart="68dp"
-
-        android:src="@drawable/icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cashout" />
+        android:id="@+id/imageView2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/icon1"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

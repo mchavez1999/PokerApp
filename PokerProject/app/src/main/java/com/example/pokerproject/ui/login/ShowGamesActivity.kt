@@ -19,7 +19,7 @@ class ShowGamesActivity : AppCompatActivity() {
     private lateinit var userpass : String
     private lateinit var username : String
     private lateinit var password : String
-
+    private lateinit var gameList : ArrayList<Game>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycler_view_item)
@@ -41,10 +41,11 @@ class ShowGamesActivity : AppCompatActivity() {
                 .putExtra("Username", username)
                 .putExtra("Password", password)
             startActivity(intent)
+            finish()
         }
 
         // Retrieve arrayList of active games and reverse it so our most recent game added is at the top
-        var gameList = intent.getSerializableExtra("GameList") as ArrayList<Game>
+        gameList = intent.getSerializableExtra("GameList") as ArrayList<Game>
         gameList.reverse()
 
         // build UI
@@ -113,7 +114,9 @@ class ShowGamesActivity : AppCompatActivity() {
                 .putExtra("username", username)
                 .putExtra("password", password)
                 .putExtra("userpass", userpass)
+                .putExtra("gameList", gameList)
             startActivity(editIntent)
+            finish()
         }
 
         return gameView

@@ -1,6 +1,8 @@
 package com.example.pokerproject.ui.login
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -81,8 +83,6 @@ class EditGameActivity : AppCompatActivity() {
         cashOut.text = game.cashout.toString()
 
         // get header and set it to display current game
-        val header = findViewById<TextView>(R.id.buffer)
-        header.text = "Editing\nGame ID: $gameID"
 
         // get buttons
         val submitBtn = findViewById<Button>(R.id.submit)
@@ -92,7 +92,7 @@ class EditGameActivity : AppCompatActivity() {
         submitBtn.setOnClickListener {
             if (!dateValidator(date.text.toString())) {
                 Toast.makeText(this, "Invalid Date Format.\nFormat: XX/XX/XXXX\nEX: 12/07/2020", Toast.LENGTH_LONG).show()
-            } else if(date.text.toString().trim().isNotEmpty() && location.text.toString().trim().isNotEmpty() && duration.text.toString().trim().isNotEmpty() && smallblind.text.toString().trim().isNotEmpty() && bigblind.text.toString().trim().isNotEmpty() && buyIn.text.toString().trim().isNotEmpty() && cashOut.text.toString().trim().isNotEmpty()){
+            } else if(!inputIsEmpty(date,location,duration,smallblind,bigblind,buyIn,cashOut)){
                 submit(
                     date.text.toString(),
                     location.text.toString(),
@@ -168,6 +168,7 @@ class EditGameActivity : AppCompatActivity() {
                     Toast.makeText(this, "No Games Left.\nAdd Game(s).", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
                     startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this, "Deleted Game ID: $gameID", Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, ShowGamesActivity::class.java)
@@ -176,6 +177,7 @@ class EditGameActivity : AppCompatActivity() {
                         .putExtra("password", password)
                         .putExtra("userpass", userpass)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -194,5 +196,25 @@ class EditGameActivity : AppCompatActivity() {
     private fun dateValidator(date: String) : Boolean {
         val dateRegex = Regex("^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d\$")
         return dateRegex.matches(date)
+    }
+
+    private fun inputIsEmpty(date: TextView, location: TextView, duration: TextView, smallblind: TextView, bigblind: TextView, buyin: TextView, cashout: TextView): Boolean {
+        return date.text.toString().trim().isEmpty() ||
+                location.text.toString().trim().isEmpty() ||
+                duration.text.toString().trim().isEmpty() ||
+                smallblind.text.toString().trim().isEmpty() ||
+                bigblind.text.toString().trim().isEmpty() ||
+                buyin.text.toString().trim().isEmpty() ||
+                cashout.text.toString().trim().isEmpty()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+            .putExtra("GameList", gameList)
+            .putExtra("username", username)
+            .putExtra("password", password)
+            .putExtra("userpass", userpass)
+        startActivity(intent)
+        finish()
     }
 }

@@ -1,7 +1,9 @@
 package com.example.pokerproject.ui.login
 
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -13,18 +15,22 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.pokerproject.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.w3c.dom.Text
 import kotlin.random.Random
 
 
 class CreateGameActivity : AppCompatActivity() {
 
-    lateinit var sharedpreferences: SharedPreferences
+    private lateinit var sharedpreferences: SharedPreferences
     lateinit var userpass: String
     lateinit var gameList: ArrayList<Game>
+    lateinit var username: String
+    lateinit var password: String
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
         json,
         object : TypeToken<ArrayList<Game>>() {}.type
     )
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -41,8 +47,8 @@ class CreateGameActivity : AppCompatActivity() {
         val duration = findViewById<TextView>(R.id.durValue)
 
         // username and password
-        val username = intent.getStringExtra("Username")
-        val password = intent.getStringExtra("Password")
+        username = intent.getStringExtra("Username").toString()
+        password = intent.getStringExtra("Password").toString()
         userpass = username+password
 
         //Setting Game Type Selector
@@ -73,7 +79,7 @@ class CreateGameActivity : AppCompatActivity() {
             // if date is in a valid format, add the game!
             if (!dateValidator(date.text.toString())) {
                 Toast.makeText(this, "Invalid Date Format.\nFormat: XX/XX/XXXX\nEX: 12/07/2020", Toast.LENGTH_LONG).show()
-            } else if(date.text.toString().trim().isNotEmpty() && location.text.toString().trim().isNotEmpty() && duration.text.toString().trim().isNotEmpty() && smallblind.text.toString().trim().isNotEmpty() && buyin.text.toString().trim().isNotEmpty() && cashout.text.toString().trim().isNotEmpty()){
+            } else if(!inputIsEmpty(date, location, duration, smallblind, bigblind, buyin, cashout)){
                 add(
                     date.text.toString(),
                     location.text.toString(),
@@ -136,6 +142,36 @@ class CreateGameActivity : AppCompatActivity() {
         val dateRegex = Regex("^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d\$")
         return dateRegex.matches(date)
     }
+    
+    private fun inputIsEmpty(date: TextView, location: TextView, duration: TextView, smallblind: TextView, bigblind: TextView, buyin: TextView, cashout: TextView): Boolean {
+        return date.text.toString().trim().isEmpty() ||
+                location.text.toString().trim().isEmpty() ||
+                duration.text.toString().trim().isEmpty() ||
+                smallblind.text.toString().trim().isEmpty() ||
+                bigblind.text.toString().trim().isEmpty() ||
+                buyin.text.toString().trim().isEmpty() ||
+                cashout.text.toString().trim().isEmpty()
+    }
 
+    override fun onBackPressed() {
+        if(gameList.isEmpty()){
+            AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing Activity")
+                .setMessage("Are you sure you want to exit the app?")
+                .setPositiveButton("Yes",
+                    DialogInterface.OnClickListener { dialog, which -> finish() })
+                .setNegativeButton("No", null)
+                .show()
+        }else{
+            val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+                .putExtra("GameList", gameList)
+                .putExtra("username", username)
+                .putExtra("password", password)
+                .putExtra("userpass", userpass)
+            startActivity(intent)
+            finish()
+        }
+    }
 
 }
