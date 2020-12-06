@@ -36,25 +36,75 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="89dp">
 
             <TextView
-                android:id="@+id/textGameTypes"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:isScrollContainer="false"
-                android:text="Game Types:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="15sp"
+                android:id="@+id/startDate"
+                android:layout_width="97dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDateRange" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/bphr"
+                android:layout_width="110dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDate" />
+
+            <TextView
+                android:id="@+id/var"
+                android:layout_width="110dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="25dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/bphr"
+                app:layout_constraintTop_toTopOf="@+id/bphr" />
+
+            <TextView
+                android:id="@+id/std"
+                android:layout_width="110dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/var" />
+
+            <TextView
+                android:id="@+id/totalWon"
+                android:layout_width="110dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="25dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/std"
+                app:layout_constraintTop_toTopOf="@+id/std" />
+
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="100dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="396dp"
+            android:layout_height="298dp">
 
             <com.edmodo.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/rangebar"
+                android:layout_width="210dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="47dp"
                 android:layout_marginEnd="30dp"
@@ -62,11 +112,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/TextBlindSize"
                 app:layout_constraintTop_toTopOf="@+id/TextBlindSize"
-                custom:tickCount="15"
-                android:layout_width="210dp" />
+                custom:tickCount="15" />
 
             <com.edmodo.rangebar.RangeBar
                 android:id="@+id/rangebar2"
+                android:layout_width="210dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="47dp"
                 android:layout_marginTop="4dp"
@@ -74,8 +124,7 @@
                 android:tooltipText="help"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textDateRange"
-                app:layout_constraintTop_toTopOf="@+id/textDateRange"
-                android:layout_width="210dp" />
+                app:layout_constraintTop_toTopOf="@+id/textDateRange" />
 
             <TextView
                 android:id="@+id/TextBlindSize"
@@ -97,7 +146,7 @@
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:isScrollContainer="false"
@@ -108,46 +157,71 @@
                 app:layout_constraintTop_toBottomOf="@+id/TextBlindSize" />
 
             <com.google.android.material.chip.ChipGroup
-                android:layout_width="0dp"
-                android:layout_height="211dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:id="@+id/help"
+                android:layout_width="362dp"
+                android:layout_height="105dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textGameTypes"
-                app:layout_constraintTop_toTopOf="@+id/textGameTypes">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bRange2">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/texas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Texas Hold'Em" />
+                    android:checkable="true"
+                    android:text="Texas Hold'Em"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/omaha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Omaha No Limit"
-                    app:chipSurfaceColor="@color/colorLight" />
+                    android:checkable="true"
+                    android:text="Pot Limit Omaha">
+
+                </com.google.android.material.chip.Chip>
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip6"
+                    android:id="@+id/stud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Game 3" />
+                    android:checkable="true"
+                    android:text="Seven Card Stud" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip7"
+                    android:id="@+id/draw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Game 4" />
+                    android:checkable="true"
+                    android:text="2-7 Triple Draw" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Game 5" />
             </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/bRange"
+                android:layout_width="202dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="@+id/rangebar"
+                app:layout_constraintStart_toStartOf="@+id/rangebar"
+                app:layout_constraintTop_toBottomOf="@+id/rangebar" />
+
+            <TextView
+                android:id="@+id/bRange2"
+                android:layout_width="202dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:text="1200 -128944"
+                app:layout_constraintEnd_toEndOf="@+id/rangebar2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/rangebar2"
+                app:layout_constraintTop_toBottomOf="@+id/rangebar2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

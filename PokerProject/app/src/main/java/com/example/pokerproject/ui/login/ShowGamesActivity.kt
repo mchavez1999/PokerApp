@@ -144,6 +144,7 @@ class ShowGamesActivity : AppCompatActivity() {
             .setNegativeButton("No", null)
             .show()
     }
+
     fun openGraph(view: View) {
         val intent = Intent(this, GraphStatsActivity::class.java)
             .putExtra("gamelist", gameList)
