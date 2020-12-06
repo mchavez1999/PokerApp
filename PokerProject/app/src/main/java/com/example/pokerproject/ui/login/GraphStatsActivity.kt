@@ -1,14 +1,18 @@
 package com.example.pokerproject.ui.login
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.edmodo.rangebar.RangeBar
 import com.edmodo.rangebar.RangeBar.OnRangeBarChangeListener
 import com.example.pokerproject.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -41,6 +45,7 @@ class GraphStatsActivity : AppCompatActivity() {
 
     lateinit var chipGroup: ChipGroup
     val entries = ArrayList<Entry>()
+     var cPrimary: Int = 0
     var minBlind: Float = Float.MAX_VALUE
     var maxBlind: Float = Float.MIN_VALUE
     var minDate : LocalDate = LocalDate.MAX
@@ -64,9 +69,10 @@ class GraphStatsActivity : AppCompatActivity() {
         setContentView(R.layout.graph_view)
         val range: RangeBar = findViewById<RangeBar>(R.id.rangebar)
         range.setTickCount(50)
-        range.setTickHeight(1.5F)
+        range.setTickHeight(0f)
         val datRange: RangeBar = findViewById(R.id.rangebar2)
         datRange.setTickCount(50)
+        datRange.setTickHeight(0f)
         tHold = findViewById(R.id.texas)
         draw = findViewById(R.id.draw)
         stud = findViewById(R.id.stud)
@@ -78,9 +84,9 @@ class GraphStatsActivity : AppCompatActivity() {
         draw.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
         stud.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
         omaha.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
-        title = "LineChartTime"
         gameList1 = intent.getSerializableExtra("gamelist") as ArrayList<Game>
         gameList = makePList(gameList1)
+        cPrimary = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
         for(g in gameList){
             if(g.bigBlind > maxBlind)
                 maxBlind = g.bigBlind.toFloat()
@@ -91,13 +97,18 @@ class GraphStatsActivity : AppCompatActivity() {
             if(g.date > maxDate)
                 maxDate = g.date
         }
+        minSelectedBlind= minBlind
+        maxSelectedBlind = maxBlind
+        minSelectedDate = minDate
+        maxSelectedDate = maxDate
         linechart = findViewById(R.id.lineChart)
         linechart2 = findViewById(R.id.lineChart2)
         val text: TextView = findViewById(R.id.TextBlindSize)
         // set an alternative background color
-        linechart.setBackgroundColor(Color.WHITE)
-        linechart2.setBackgroundColor(Color.WHITE)
+        linechart.setBackgroundColor(Color.TRANSPARENT)
+        linechart2.setBackgroundColor(Color.TRANSPARENT)
         // add data
+        updateGameTypes()
         range.setOnRangeBarChangeListener(OnRangeBarChangeListener { range, leftThumbIndex, rightThumbIndex ->
             val lowerBlind: Float = ((maxBlind - minBlind) / 49) * leftThumbIndex + minBlind
             val uppBlind: Float = (((maxBlind - minBlind) / 49) * rightThumbIndex + minBlind)
@@ -137,20 +148,14 @@ class GraphStatsActivity : AppCompatActivity() {
         val plotList = plottableList(gameList)
         val series1: ArrayList<Entry> = avgBlindshrEntries(plotList)
         val series2: ArrayList<Entry> = cumulativeWinningsEntries(plotList)
-        val v1 = LineDataSet(series1, "Big Blinds per Hour")
-        val v2 = LineDataSet(series2, "Cumulative Winnings")
-        linechart.data = LineData(v1)
-        linechart2.data = LineData(v2)
-        linechart.resetZoom()
-        linechart.axisRight.setDrawLabels(false)
-        linechart.xAxis.setDrawLabels(false)
-        linechart2.axisRight.setDrawLabels(false)
-        linechart2.xAxis.setDrawLabels(true)
-        linechart2.xAxis.setLabelCount(5, true)
-        linechart2.xAxis.valueFormatter = formatter as ValueFormatter?
-        linechart2.resetZoom()
-        linechart.description.isEnabled = false
-        lineChart2.description.isEnabled = false
+        val v1 : LineDataSet= LineDataSet(series1, "Big Blinds per Hour")
+        val v2 : LineDataSet = LineDataSet(series2, "Cumulative Winnings")
+        v2.lineWidth = 3f
+        v2.setDrawValues(false)
+        v2.setDrawCircles(false)
+        style(linechart, v1)
+        style(linechart2, v2)
+        linechart2.axisLeft.valueFormatter = formatter2
 
     }
 
@@ -224,7 +229,13 @@ class GraphStatsActivity : AppCompatActivity() {
     }
     var formatter: ValueFormatter = object : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            return LocalDate.ofEpochDay(value.toLong()).format(dtFormat)
+            return LocalDate.ofEpochDay(value.toLong()).format(DateTimeFormatter.ofPattern("MM/dd/yy"))
+        }
+
+    }
+    var formatter2: ValueFormatter = object : ValueFormatter() {
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            return "$" + value.toString(0)
         }
 
     }
@@ -232,6 +243,35 @@ class GraphStatsActivity : AppCompatActivity() {
         var day : Long = game.date.toEpochDay()
         var winnings: Float = ((game.cashout - game.buyin).toFloat())
         var bigBlindsperHour: Float = winnings/game.dur.toFloat()
+    }
+    private fun style(chart: LineChart, v: LineDataSet){
+        v.lineWidth = 3f
+        v.setDrawValues(false)
+        v.setDrawCircles(false)
+        v.color =  cPrimary
+        chart.data = LineData(v)
+        chart.axisRight.setDrawLabels(false)
+        chart.xAxis.setDrawLabels(true)
+        chart.legend.textSize = 14f
+        chart.legend.typeface = Typeface.DEFAULT_BOLD
+        chart.legend.textColor = cPrimary
+        chart.xAxis.setLabelCount(4, true)
+        chart.axisLeft.setLabelCount(4, true)
+        chart.axisLeft.textSize = 12f
+        chart.axisLeft.textColor = cPrimary
+        chart.axisLeft.typeface = Typeface.DEFAULT_BOLD
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        chart.xAxis.textSize = 15f
+        chart.xAxis.setAvoidFirstLastClipping(true)
+        chart.xAxis.typeface =  Typeface.DEFAULT_BOLD
+        chart.xAxis.gridColor = ResourcesCompat.getColor(resources, R.color.darkTransparent, null)
+        chart.axisRight.gridColor = ResourcesCompat.getColor(resources, R.color.darkTransparent, null)
+        chart.axisRight.gridLineWidth = 1f
+        chart.xAxis.gridLineWidth = 1f
+        chart.xAxis.textColor = cPrimary
+        chart.xAxis.valueFormatter = formatter as ValueFormatter?
+        chart.resetZoom()
+        chart.description.isEnabled = false
     }
 
 }
