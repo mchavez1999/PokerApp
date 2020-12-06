@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Layout
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
@@ -142,5 +143,11 @@ class ShowGamesActivity : AppCompatActivity() {
                 DialogInterface.OnClickListener { dialog, which -> finish() })
             .setNegativeButton("No", null)
             .show()
+    }
+    fun openGraph(view: View) {
+        val intent = Intent(this, GraphStatsActivity::class.java)
+            .putExtra("gamelist", gameList)
+        startActivity(intent)
+        finish()
     }
 }
