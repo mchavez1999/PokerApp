@@ -1,14 +1,18 @@
 package com.example.pokerproject.ui.login
 
+import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Layout
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import com.example.pokerproject.R
 
 
@@ -102,8 +106,15 @@ class ShowGamesActivity : AppCompatActivity() {
         // set text
         gameView.text = "Game ID: \t\t\t\t$ID\n$game"
 
-        // set margin top and bottom
-        gameView.setPadding(40, 10, 70, 10) // 20
+        // set padding top and bottom
+        gameView.setPadding(40, 10, 70, 10) // top 10
+
+        // set margins
+        var marginParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        marginParams.setMargins(0,10,0,0)
+        gameView.layoutParams = marginParams
+
+        
 
         // add in edit-pencil
         gameView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.edit_pencil_sm, 0)
