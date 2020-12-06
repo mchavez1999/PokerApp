@@ -114,8 +114,6 @@ class ShowGamesActivity : AppCompatActivity() {
         marginParams.setMargins(0,10,0,0)
         gameView.layoutParams = marginParams
 
-        
-
         // add in edit-pencil
         gameView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.edit_pencil_sm, 0)
 
