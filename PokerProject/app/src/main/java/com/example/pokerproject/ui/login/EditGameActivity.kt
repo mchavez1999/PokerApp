@@ -83,6 +83,8 @@ class EditGameActivity : AppCompatActivity() {
         cashOut.text = game.cashout.toString()
 
         // get header and set it to display current game
+        var header = findViewById<TextView>(R.id.buffer)
+        header.text = "Editing Game ID: $gameID"
 
         // get buttons
         val submitBtn = findViewById<Button>(R.id.submit)

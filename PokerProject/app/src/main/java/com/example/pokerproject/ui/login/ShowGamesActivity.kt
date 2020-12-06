@@ -93,7 +93,7 @@ class ShowGamesActivity : AppCompatActivity() {
         gameView.id = ID
 
         // set height
-        gameView.height = 275
+        gameView.height = 450 // 275
 
         // set bg/text color
         gameView.setBackgroundColor(Color.rgb(colorValue, colorValue, colorValue))
@@ -103,8 +103,10 @@ class ShowGamesActivity : AppCompatActivity() {
         gameView.text = "Game ID: \t\t\t\t$ID\n$game"
 
         // set margin top and bottom
-        gameView.setPadding(40, 10, 20, 10)
+        gameView.setPadding(40, 10, 70, 10) // 20
 
+        // add in edit-pencil
+        gameView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.edit_pencil_sm, 0)
 
         // setting each onClickListeners for edit/delete
         gameView.setOnClickListener {
