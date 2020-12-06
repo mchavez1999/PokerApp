@@ -137,16 +137,23 @@ class ShowGamesActivity : AppCompatActivity() {
     override fun onBackPressed() {
         AlertDialog.Builder(this)
             .setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle("Closing Activity")
-            .setMessage("Are you sure you want to exit the app?")
+            .setTitle("Logging Out")
+            .setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, which -> finish() })
+                DialogInterface.OnClickListener { dialog, which ->
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                })
             .setNegativeButton("No", null)
             .show()
     }
 
     fun openGraph(view: View) {
         val intent = Intent(this, GraphStatsActivity::class.java)
+            .putExtra("username", username)
+            .putExtra("password", password)
+            .putExtra("userpass", userpass)
             .putExtra("gamelist", gameList)
         startActivity(intent)
         finish()

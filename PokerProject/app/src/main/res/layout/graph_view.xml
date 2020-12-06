@@ -24,64 +24,77 @@
             android:padding="9dp"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart2"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:padding="9dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:padding="9dp" >
+
+
+        </com.github.mikephil.charting.charts.LineChart>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="89dp">
+            android:layout_height="122dp">
 
             <TextView
                 android:id="@+id/bphr"
-                android:layout_width="200dp"
-                android:layout_height="21dp"
+                android:layout_width="350dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:text="Average Blinds Per Hour: "
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/var"
-                android:layout_width="140dp"
+                android:id="@+id/totalWon"
+                android:layout_width="350dp"
                 android:layout_height="22dp"
-                android:layout_marginStart="10dp"
-                android:text="Total WInnings"
-                app:layout_constraintStart_toEndOf="@+id/bphr"
-                app:layout_constraintTop_toTopOf="@+id/bphr" />
-
-            <TextView
-                android:id="@+id/std"
-                android:layout_width="145dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Standard Variation:"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="Total WInnings"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/var"
                 app:layout_constraintTop_toBottomOf="@+id/var" />
 
             <TextView
-                android:id="@+id/totalWon"
-                android:layout_width="110dp"
-                android:layout_height="20dp"
+                android:id="@+id/std"
+                android:layout_width="342dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
+                android:text="Standard Deviation:"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bphr" />
+
+            <TextView
+                android:id="@+id/var"
+                android:layout_width="350dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
                 android:text="Variance:"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/std" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="396dp"
-            android:layout_height="298dp">
+            android:layout_width="399dp"
+            android:layout_height="206dp">
 
             <com.edmodo.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/rangebar"
@@ -111,7 +124,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:inputType="textPersonName"
                 android:isScrollContainer="false"
                 android:text="Blind Size"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -126,7 +138,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:inputType="textPersonName"
                 android:isScrollContainer="false"
                 android:text="Date Range"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -137,13 +148,18 @@
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/help"
                 android:layout_width="362dp"
-                android:layout_height="105dp"
+                android:layout_height="68dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="15dp"
+                app:chipSpacingHorizontal="2dp"
+                app:chipSpacingVertical="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bRange2">
+                app:layout_constraintTop_toBottomOf="@+id/bRange2"
+                app:singleLine="false">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/texas"
@@ -152,7 +168,9 @@
                     android:checkable="true"
                     android:checked="true"
                     android:text="Texas Hold'Em"
-                    android:textSize="14sp" />
+                    android:textSize="12sp"
+                    app:chipMinHeight="20dp"
+                    app:chipMinTouchTargetSize="35dp" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/omaha"
@@ -160,7 +178,10 @@
                     android:layout_height="wrap_content"
                     android:checkable="true"
                     android:checked="true"
-                    android:text="Pot Limit Omaha">
+                    android:text="Pot Limit Omaha"
+                    android:textSize="12sp"
+                    app:chipMinHeight="20dp"
+                    app:chipMinTouchTargetSize="30dp">
 
                 </com.google.android.material.chip.Chip>
 
@@ -170,15 +191,24 @@
                     android:layout_height="wrap_content"
                     android:checkable="true"
                     android:checked="true"
-                    android:text="Seven Card Stud" />
+                    android:text="Seven Card Stud"
+                    app:chipMinHeight="20dp"
+                    app:chipMinTouchTargetSize="30dp" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/draw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoSizeTextType="none"
+                    android:background="@color/colorPrimary"
+                    android:buttonTint="#00802E2E"
                     android:checkable="true"
                     android:checked="true"
-                    android:text="2-7 Triple Draw" />
+                    android:text="2-7 Triple Draw"
+                    android:textSize="12sp"
+                    app:chipMinHeight="20dp"
+                    app:chipMinTouchTargetSize="30dp"
+                    app:chipSurfaceColor="#FFFFFF" />
 
             </com.google.android.material.chip.ChipGroup>
 

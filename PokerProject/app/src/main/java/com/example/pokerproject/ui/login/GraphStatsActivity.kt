@@ -1,11 +1,16 @@
 package com.example.pokerproject.ui.login
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.SuperscriptSpan
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.edmodo.rangebar.RangeBar
 import com.edmodo.rangebar.RangeBar.OnRangeBarChangeListener
@@ -16,13 +21,12 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.graph_view.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -42,10 +46,12 @@ class GraphStatsActivity : AppCompatActivity() {
     lateinit var omaha: Chip
     lateinit var stud: Chip
     lateinit var draw: Chip
+    lateinit var password: String
+    lateinit var username: String
+    lateinit var userpass: String
 
-    lateinit var chipGroup: ChipGroup
-    val entries = ArrayList<Entry>()
-     var cPrimary: Int = 0
+
+    var cPrimary: Int = 0
     var minBlind: Float = Float.MAX_VALUE
     var maxBlind: Float = Float.MIN_VALUE
     var minDate : LocalDate = LocalDate.MAX
@@ -77,9 +83,15 @@ class GraphStatsActivity : AppCompatActivity() {
         draw = findViewById(R.id.draw)
         stud = findViewById(R.id.stud)
         omaha = findViewById(R.id.omaha)
-        chipGroup = findViewById(R.id.help)
+        bphr = findViewById(R.id.bphr)
+        varTv = findViewById(R.id.`var`)
+        stdTv = findViewById(R.id.std)
+        totalWon = findViewById(R.id.totalWon)
         brange = findViewById(R.id.bRange)
         drange = findViewById(R.id.bRange2)
+        userpass = intent.getStringExtra("userpass") as String
+        username = intent.getStringExtra("username") as String
+        password = intent.getStringExtra("password") as String
         tHold.setOnCheckedChangeListener { buttonView, isChecked ->  updateGameTypes() }
         draw.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
         stud.setOnCheckedChangeListener{ buttonView, isChecked ->  updateGameTypes() }
@@ -148,6 +160,34 @@ class GraphStatsActivity : AppCompatActivity() {
         val plotList = plottableList(gameList)
         val series1: ArrayList<Entry> = avgBlindshrEntries(plotList)
         val series2: ArrayList<Entry> = cumulativeWinningsEntries(plotList)
+        if(plotList.size > 0) {
+            val winnings = series2.get(series2.size - 1).y
+            val blindsperhour = series1.get(series1.size - 1).y
+            var std = 0f
+            var variance = 0f
+            for (item in series1) {
+                variance += Math.pow((item.y - blindsperhour).toDouble(), 2.0).toFloat()
+            }
+            if (abs(variance) > 0.01f)
+                variance = variance / (series1.size - 1)
+            std = Math.pow(variance.toDouble(), .5).toFloat()
+            val stdText ="Standard Deviation: " + std.toString(2) + " Blinds/hr"
+            stdTv.text =stdText
+            val varText = "Variance: " + variance.toString(2) + " Blinds2" + "/hr"
+            val superscriptSpan = SuperscriptSpan()
+            val builder = SpannableStringBuilder(varText)
+            builder.setSpan(
+                superscriptSpan,
+                varText.indexOf("s2")+1,
+                varText.indexOf("s2") + "s2".length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            `var`.text = builder
+            val totText = "Total Winnings: $" + winnings.toString(2)
+            totalWon.text = totText
+            val blindsText = "Average Per Hour: " + blindsperhour.toString(2) +  "Big Blinds"
+            bphr.text = blindsText
+        }
         val v1 : LineDataSet= LineDataSet(series1, "Big Blinds per Hour")
         val v2 : LineDataSet = LineDataSet(series2, "Cumulative Winnings")
         v2.lineWidth = 3f
@@ -192,7 +232,7 @@ class GraphStatsActivity : AppCompatActivity() {
         return ret
     }
     fun toLocalDate(date: String): LocalDate{
-        return LocalDate.parse(date,dtFormat)
+        return LocalDate.parse(date, dtFormat)
     }
     fun plottableList(input: ArrayList<pGame>)  : ArrayList<plottable>{
         var ret :ArrayList<plottable> = arrayListOf<plottable>()
@@ -265,13 +305,27 @@ class GraphStatsActivity : AppCompatActivity() {
         chart.xAxis.setAvoidFirstLastClipping(true)
         chart.xAxis.typeface =  Typeface.DEFAULT_BOLD
         chart.xAxis.gridColor = ResourcesCompat.getColor(resources, R.color.darkTransparent, null)
-        chart.axisRight.gridColor = ResourcesCompat.getColor(resources, R.color.darkTransparent, null)
+        chart.axisRight.gridColor = ResourcesCompat.getColor(
+            resources,
+            R.color.darkTransparent,
+            null
+        )
         chart.axisRight.gridLineWidth = 1f
         chart.xAxis.gridLineWidth = 1f
         chart.xAxis.textColor = cPrimary
         chart.xAxis.valueFormatter = formatter as ValueFormatter?
         chart.resetZoom()
         chart.description.isEnabled = false
+    }
+    override fun onBackPressed() {
+        val intent = Intent(applicationContext, ShowGamesActivity::class.java)
+            .putExtra("username", username)
+            .putExtra("password", password)
+            .putExtra("userpass", userpass)
+            .putExtra("GameList", gameList1)
+
+        startActivity(intent)
+        finish()
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.pokerproject.ui.login
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -115,6 +117,16 @@ class LoginActivity : AppCompatActivity() {
             val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}\$")
             passwordRegex.matches(password)
         }
+    }
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Closing Activity")
+            .setMessage("Are you sure you want to exit the app?")
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, which -> finish() })
+            .setNegativeButton("No", null)
+            .show()
     }
 
 
