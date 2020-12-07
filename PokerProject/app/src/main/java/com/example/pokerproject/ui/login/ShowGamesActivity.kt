@@ -149,7 +149,7 @@ class ShowGamesActivity : AppCompatActivity() {
             .show()
     }
 
-    fun openGraph() {
+    fun openGraph(view: View) {
         val intent = Intent(this, GraphStatsActivity::class.java)
             .putExtra("username", username)
             .putExtra("password", password)
