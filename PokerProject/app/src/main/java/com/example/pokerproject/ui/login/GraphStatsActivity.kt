@@ -185,7 +185,7 @@ class GraphStatsActivity : AppCompatActivity() {
             `var`.text = builder
             val totText = "Total Winnings: $" + winnings.toString(2)
             totalWon.text = totText
-            val blindsText = "Average Per Hour: " + blindsperhour.toString(2) +  "Big Blinds"
+            val blindsText = "Average Per Hour: " + blindsperhour.toString(2) +  " Big Blinds"
             bphr.text = blindsText
         }
         val v1 : LineDataSet= LineDataSet(series1, "Big Blinds per Hour")

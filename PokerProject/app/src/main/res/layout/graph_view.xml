@@ -146,7 +146,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/TextBlindSize" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/help"
                 android:layout_width="362dp"
                 android:layout_height="68dp"
                 android:layout_marginStart="15dp"

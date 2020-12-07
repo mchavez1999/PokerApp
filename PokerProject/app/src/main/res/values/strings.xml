@@ -3,19 +3,11 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_list">ScrollingActivity</string>
-    <string name="selected_item">Selected item:</string>
     <string-array name="GameTypes">
         <item>Texas Hold\'Em</item>
         <item>Pot Limit Omaha</item>
         <item>Seven Card Stud</item>
         <item>2-7 Triple Draw</item>
     </string-array>
-    <string name="action_settings">Settings</string>
 </resources>

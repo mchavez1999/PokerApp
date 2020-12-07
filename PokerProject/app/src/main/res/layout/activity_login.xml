@@ -17,6 +17,7 @@
         android:layout_width="375dp"
         android:layout_height="103dp"
         android:gravity="center"
+        android:textColor="@color/color10"
         android:text="Poker Game Session Tracker"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@id/username"
