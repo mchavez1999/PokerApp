@@ -63,7 +63,9 @@ class GraphStatsActivity : AppCompatActivity() {
     //overload float toString to trim number of decimals
     private fun Float.toString(numOfDec: Int): String {
         val integerDigits = this.toInt()
-        val floatDigits = ((this - integerDigits) * 10f.pow(numOfDec)).roundToInt()
+        var floatDigits = ((this - integerDigits.toFloat()) * 10f.pow(numOfDec)).toInt().toString()
+        if (floatDigits.length == 1)
+            floatDigits = "0" + floatDigits
         return "${integerDigits}.${floatDigits}"
     }
 
@@ -133,17 +135,17 @@ class GraphStatsActivity : AppCompatActivity() {
         updateGameTypes()
         //listener for both rangebars, updated max and min values and replots
         range.setOnRangeBarChangeListener(OnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
-            val lowerBlind: Float = ((maxBlind - minBlind) / 49) * leftThumbIndex + minBlind
-            val uppBlind: Float = (((maxBlind - minBlind) / 49) * rightThumbIndex + minBlind)
+            val lowerBlind: Float = ((maxBlind - minBlind) / 49) * leftThumbIndex + minBlind*.98F
+            val uppBlind: Float = (((maxBlind - minBlind) / 49) * rightThumbIndex + minBlind)*1.02F
             maxSelectedBlind = uppBlind
             minSelectedBlind = lowerBlind
             plot()
         })
         datRange.setOnRangeBarChangeListener(OnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
             minSelectedDate =
-                LocalDate.ofEpochDay((maxDate.toEpochDay() - minDate.toEpochDay()) / 49 * leftThumbIndex + minDate.toEpochDay() - 20)
+                LocalDate.ofEpochDay(((maxDate.toEpochDay() - minDate.toEpochDay()) / 48f * leftThumbIndex + minDate.toEpochDay()).toLong() -1)
             maxSelectedDate =
-                LocalDate.ofEpochDay(+(maxDate.toEpochDay() - minDate.toEpochDay()) / 47 * rightThumbIndex + minDate.toEpochDay())
+                LocalDate.ofEpochDay((((maxDate.toEpochDay() - minDate.toEpochDay()) / 48f) * rightThumbIndex + minDate.toEpochDay()).toLong())
             plot()
         })
     }
