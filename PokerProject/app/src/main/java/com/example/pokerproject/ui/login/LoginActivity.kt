@@ -40,10 +40,12 @@ class LoginActivity : AppCompatActivity() {
             Register(username.text.toString(), password.text.toString());
         }
 
-        val clear = findViewById<Button>(R.id.clear) as Button
+       /* val clear = findViewById<Button>(R.id.clear) as Button
         clear.setOnClickListener(){
             clearData(username.text.toString(), password.text.toString())
         }
+
+        */
     }
 
     private fun Register(username: String, password: String) {
@@ -103,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun clearData(username: String, password: String){
+   /* private fun clearData(username: String, password: String){
         if(!sharedpreferences.contains(username)){
             Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show()
         } else if(!sharedpreferences.getString(username, null).equals(password)) {
@@ -116,6 +118,7 @@ class LoginActivity : AppCompatActivity() {
         }
         Toast.makeText(this, "User Data Cleared", Toast.LENGTH_SHORT).show()
     }
+    */
 
     // check for valid passwords
     private fun validPassword(password: String?) : Boolean {
