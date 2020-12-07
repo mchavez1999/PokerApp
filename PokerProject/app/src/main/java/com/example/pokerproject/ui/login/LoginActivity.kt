@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
 
         val clear = findViewById<Button>(R.id.clear) as Button
         clear.setOnClickListener(){
-            clearData()
+            clearData(username.text.toString(), password.text.toString())
         }
     }
 
@@ -103,8 +103,17 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun clearData(){
-        sharedpreferences.edit().clear().commit();
+    private fun clearData(username: String, password: String){
+        if(!sharedpreferences.contains(username)){
+            Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show()
+        } else if(!sharedpreferences.getString(username, null).equals(password)) {
+            Toast.makeText(this, "Error: Incorrect password", Toast.LENGTH_SHORT).show()
+        } else{
+            val editor = sharedpreferences.edit()
+            editor.remove(username)
+            editor.remove(username+password)
+            editor.apply()
+        }
         Toast.makeText(this, "User Data Cleared", Toast.LENGTH_SHORT).show()
     }
 
