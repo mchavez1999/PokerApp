@@ -14,3 +14,7 @@ html, body {
 .title {
     margin-top: 10%;
 }
+
+.pointer {
+    cursor: pointer;
+}
