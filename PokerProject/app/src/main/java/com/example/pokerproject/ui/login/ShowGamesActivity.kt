@@ -140,7 +140,7 @@ class ShowGamesActivity : AppCompatActivity() {
             .setTitle("Logging Out")
             .setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, which ->
+                DialogInterface.OnClickListener { _, _ ->
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -149,7 +149,7 @@ class ShowGamesActivity : AppCompatActivity() {
             .show()
     }
 
-    fun openGraph(view: View) {
+    fun openGraph() {
         val intent = Intent(this, GraphStatsActivity::class.java)
             .putExtra("username", username)
             .putExtra("password", password)
