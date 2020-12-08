@@ -1,11 +1,8 @@
 package com.example.pokerproject.ui.login
 
-import android.os.Parcel
-import android.os.Parcelable
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class Game(dateOfGame: String, location: String, duration: Double, gameType: String, smallBlindVal: Double, bigBlindVal: Double, buyinVal: Double, cashoutVal: Double, idVal: Int) : Serializable {
     var date: String = dateOfGame
@@ -36,9 +33,6 @@ class Game(dateOfGame: String, location: String, duration: Double, gameType: Str
                 "Big Blind: \t\t\t\t$ $bigBlind\n" +
                 "Buy-in: \t\t\t\t\t\t$ $buyin\n" +
                 "Cashout: \t\t\t\t$ $cashout"
-    }
-    fun toLocalDate(date :String): LocalDate{
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
     }
 }
 

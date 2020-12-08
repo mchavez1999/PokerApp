@@ -26,7 +26,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.math.abs
 import kotlin.math.pow
-import kotlin.math.roundToInt
 
 
 class GraphStatsActivity : AppCompatActivity() {
@@ -65,7 +64,7 @@ class GraphStatsActivity : AppCompatActivity() {
         val integerDigits = this.toInt()
         var floatDigits = ((this - integerDigits.toFloat()) * 10f.pow(numOfDec)).toInt().toString()
         if (floatDigits.length == 1)
-            floatDigits = "0" + floatDigits
+            floatDigits = "0$floatDigits"
         return "${integerDigits}.${floatDigits}"
     }
 
@@ -73,7 +72,7 @@ class GraphStatsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.graph_view)
         //range bar for blind size
-        val range: RangeBar = findViewById<RangeBar>(R.id.rangebar)
+        val range: RangeBar = findViewById(R.id.rangebar)
         range.setTickCount(50)
         range.setTickHeight(0f)
         //range bar for date range
@@ -134,20 +133,21 @@ class GraphStatsActivity : AppCompatActivity() {
         //update game types also plots initial values
         updateGameTypes()
         //listener for both rangebars, updated max and min values and replots
-        range.setOnRangeBarChangeListener(OnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
-            val lowerBlind: Float = ((maxBlind - minBlind) / 49) * leftThumbIndex + minBlind*.98F
-            val uppBlind: Float = (((maxBlind - minBlind) / 49) * rightThumbIndex + minBlind)*1.02F
+        range.setOnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
+            val lowerBlind: Float = ((maxBlind - minBlind) / 49) * leftThumbIndex + minBlind * .98F
+            val uppBlind: Float =
+                (((maxBlind - minBlind) / 49) * rightThumbIndex + minBlind) * 1.02F
             maxSelectedBlind = uppBlind
             minSelectedBlind = lowerBlind
             plot()
-        })
-        datRange.setOnRangeBarChangeListener(OnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
+        }
+        datRange.setOnRangeBarChangeListener { _, leftThumbIndex, rightThumbIndex ->
             minSelectedDate =
-                LocalDate.ofEpochDay(((maxDate.toEpochDay() - minDate.toEpochDay()) / 48f * leftThumbIndex + minDate.toEpochDay()).toLong() -1)
+                LocalDate.ofEpochDay(((maxDate.toEpochDay() - minDate.toEpochDay()) / 48f * leftThumbIndex + minDate.toEpochDay()).toLong() - 1)
             maxSelectedDate =
                 LocalDate.ofEpochDay((((maxDate.toEpochDay() - minDate.toEpochDay()) / 48f) * rightThumbIndex + minDate.toEpochDay()).toLong())
             plot()
-        })
+        }
     }
     //check which chips are checked and adds them to selectedGameTypes string
     private fun updateGameTypes() {
@@ -180,19 +180,19 @@ class GraphStatsActivity : AppCompatActivity() {
         val series2: ArrayList<Entry> = cumulativeWinningsEntries(plotList)
         //if there are entries than calculate statistics
         if(plotList.size > 0) {
-            val winnings = series2.get(series2.size - 1).y
-            val blindsperhour = series1.get(series1.size - 1).y
+            val winnings = series2[series2.size - 1].y
+            val blindsperhour = series1[series1.size - 1].y
             var std :Float
             var variance = 0f
             for (item in series1) {
                 //variance before division
-                variance += Math.pow((item.y - blindsperhour).toDouble(), 2.0).toFloat()
+                variance += (item.y - blindsperhour).toDouble().pow(2.0).toFloat()
             }
             if (abs(variance) > 0.01f)
                 //if variance is not 0 (n = 1), divide by n-1
                 variance /= (series1.size - 1)
             //std = Sqrt(var)
-            std = Math.pow(variance.toDouble(), .5).toFloat()
+            std = variance.toDouble().pow(.5).toFloat()
             //text for statistics
             val stdText ="Standard Deviation: " + std.toString(2) + " Blinds/hr"
             stdTv.text =stdText
@@ -213,8 +213,8 @@ class GraphStatsActivity : AppCompatActivity() {
             bphr.text = blindsText
         }
         //line data set from the two data series
-        val v1 : LineDataSet= LineDataSet(series1, "Big Blinds per Hour")
-        val v2 : LineDataSet = LineDataSet(series2, "Cumulative Winnings")
+        val v1 = LineDataSet(series1, "Big Blinds per Hour")
+        val v2 = LineDataSet(series2, "Cumulative Winnings")
         //style function plots both series and sets the style
         style(linechart, v1)
         style(linechart2, v2)
@@ -244,7 +244,7 @@ class GraphStatsActivity : AppCompatActivity() {
     }
     // making games pGames, sorting, and returning list
     private fun makePList(list: ArrayList<Game>) : ArrayList<PGame>{
-        var ret: ArrayList<PGame> = arrayListOf<PGame>()
+        var ret: ArrayList<PGame> = arrayListOf()
         for (item in list){
             ret.add(PGame(item))
         }
@@ -253,7 +253,7 @@ class GraphStatsActivity : AppCompatActivity() {
     }
     // turning pGames into plottable adn returning
     private fun plottableList(input: ArrayList<PGame>)  : ArrayList<plottable>{
-        var ret :ArrayList<plottable> = arrayListOf<plottable>()
+        var ret :ArrayList<plottable> = arrayListOf()
         for(item in input){
             ret.add(plottable(item))
         }
@@ -262,13 +262,13 @@ class GraphStatsActivity : AppCompatActivity() {
     //calculating cumulative average blinds per hour and returning a list of Entry object for plotting
     private fun avgBlindshrEntries(lst: ArrayList<plottable>) : ArrayList<Entry>{
         val len = lst.size
-        var ret: ArrayList<Entry> = arrayListOf<Entry>()
+        var ret: ArrayList<Entry> = arrayListOf()
         for(i in 0 until len){
             if(i == 0){
                 ret.add(Entry(lst[i].day.toFloat(), lst[i].bigBlindsperHour))
                 continue
             }
-            val avg = (ret[i - 1].y*i + lst.get(i).bigBlindsperHour)/(i+1)
+            val avg = (ret[i - 1].y*i + lst[i].bigBlindsperHour)/(i+1)
             ret.add(Entry(lst[i].day.toFloat(), avg))
         }
         return ret
@@ -276,13 +276,13 @@ class GraphStatsActivity : AppCompatActivity() {
     //cumulative total winning calculated and returned as entry list
     private fun cumulativeWinningsEntries(lst: ArrayList<plottable>) : ArrayList<Entry>{
         val len = lst.size
-        var ret: ArrayList<Entry> = arrayListOf<Entry>()
+        var ret: ArrayList<Entry> = arrayListOf()
         for(i in 0 until len){
             if(i == 0){
                 ret.add(Entry(lst[i].day.toFloat(), lst[i].winnings))
                 continue
             }
-            val winnings = (ret[i - 1].y + lst.get(i).winnings)
+            val winnings = (ret[i - 1].y + lst[i].winnings)
             ret.add(Entry(lst[i].day.toFloat(), winnings))
         }
         return ret

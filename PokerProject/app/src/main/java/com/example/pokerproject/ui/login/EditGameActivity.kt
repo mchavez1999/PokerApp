@@ -1,8 +1,6 @@
 package com.example.pokerproject.ui.login
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -23,7 +21,7 @@ class EditGameActivity : AppCompatActivity() {
     private lateinit var password : String
     lateinit var gameList: ArrayList<Game>
     var gameID by Delegates.notNull<Int>()
-    inline fun <reified T> Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
+    inline fun Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
         json,
         object : TypeToken<ArrayList<Game>>() {}.type
     )
@@ -40,7 +38,7 @@ class EditGameActivity : AppCompatActivity() {
         // get JSON
         sharedpreferences = getSharedPreferences(LoginActivity.mypreference, Context.MODE_PRIVATE)
         var json = sharedpreferences.getString(userpass, null)
-        gameList = json?.let { Gson().fromJson<Game>(it) }!!
+        gameList = json?.let { Gson().fromJson(it) }!!
 
         // get game
         var game = intent.getSerializableExtra("game") as Game
@@ -61,7 +59,7 @@ class EditGameActivity : AppCompatActivity() {
             val adapter = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, gameTypes)
             spinner.adapter = adapter
-            pos = adapter.getPosition(game.gameType);
+            pos = adapter.getPosition(game.gameType)
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
@@ -104,7 +102,7 @@ class EditGameActivity : AppCompatActivity() {
                     bigblind.text.toString().toDouble(),
                     buyIn.text.toString().toDouble(),
                     cashOut.text.toString().toDouble(),
-                );
+                )
 
                 // success game added toast
                 Toast.makeText(this, "Successful Edits to Game ID: $gameID", Toast.LENGTH_SHORT).show()

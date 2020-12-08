@@ -7,16 +7,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokerproject.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.w3c.dom.Text
-import kotlin.random.Random
 
 
 class CreateGameActivity : AppCompatActivity() {
@@ -26,7 +22,7 @@ class CreateGameActivity : AppCompatActivity() {
     lateinit var gameList: ArrayList<Game>
     lateinit var username: String
     lateinit var password: String
-    inline fun <reified T> Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
+    inline fun Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
         json,
         object : TypeToken<ArrayList<Game>>() {}.type
     )
@@ -70,10 +66,10 @@ class CreateGameActivity : AppCompatActivity() {
         // get and build JSON
         sharedpreferences = getSharedPreferences(LoginActivity.mypreference, Context.MODE_PRIVATE)
         var json = sharedpreferences.getString(userpass, null)
-        gameList = json?.let { Gson().fromJson<Game>(it) }!!
+        gameList = json?.let { Gson().fromJson(it) }!!
 
         // addGame button functionality
-        val addGame = findViewById<Button>(R.id.addGame) as Button
+        val addGame = findViewById<Button>(R.id.addGame)
         addGame.setOnClickListener{
 
             // if date is in a valid format, add the game!
@@ -89,7 +85,7 @@ class CreateGameActivity : AppCompatActivity() {
                     bigblind.text.toString().toDouble(),
                     buyin.text.toString().toDouble(),
                     cashout.text.toString().toDouble(),
-                );
+                )
 
                 // success game added toast
                 Toast.makeText(this, "Game Successfully Added.", Toast.LENGTH_SHORT).show()
@@ -99,7 +95,7 @@ class CreateGameActivity : AppCompatActivity() {
         }
 
         // show games button functionality
-        val showGames = findViewById<Button>(R.id.showGames) as Button
+        val showGames = findViewById<Button>(R.id.showGames)
         showGames.setOnClickListener{
 
             // see if there are any games to show, If so, start activity
@@ -119,7 +115,7 @@ class CreateGameActivity : AppCompatActivity() {
 
     private fun nextID(): Int {
         if(gameList.isNotEmpty()){
-            return gameList.get(gameList.size-1).ID + 1
+            return gameList[gameList.size-1].ID + 1
         }
         return 1
     }
@@ -134,7 +130,7 @@ class CreateGameActivity : AppCompatActivity() {
         var gson = Gson()
         var json = gson.toJson(gameList)
         editor.putString(userpass, json)
-        editor.apply();
+        editor.apply()
     }
 
     // Ex: 12/07/2020
@@ -157,10 +153,10 @@ class CreateGameActivity : AppCompatActivity() {
         if(gameList.isEmpty()){
             AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Activity")
-                .setMessage("Are you sure you want to exit the app?")
-                .setPositiveButton("Yes",
-                    DialogInterface.OnClickListener { dialog, which -> finish() })
+                .setTitle("Logging Out")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Yes"
+                ) { _ , _ -> finish() }
                 .setNegativeButton("No", null)
                 .show()
         }else{

@@ -1,19 +1,15 @@
 package com.example.pokerproject.ui.login
 
-import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Layout
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginTop
 import com.example.pokerproject.R
 
 
@@ -139,12 +135,12 @@ class ShowGamesActivity : AppCompatActivity() {
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setTitle("Logging Out")
             .setMessage("Are you sure you want to log out?")
-            .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { _, _ ->
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                })
+            .setPositiveButton("Yes"
+            ) { _, _ ->
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
             .setNegativeButton("No", null)
             .show()
     }

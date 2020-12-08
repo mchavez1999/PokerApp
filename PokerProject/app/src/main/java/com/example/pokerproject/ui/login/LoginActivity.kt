@@ -9,7 +9,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.example.pokerproject.R
@@ -18,7 +17,7 @@ import com.google.gson.reflect.TypeToken
 
 class LoginActivity : AppCompatActivity() {
     lateinit var sharedpreferences: SharedPreferences
-    inline fun <reified T> Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
+    inline fun Gson.fromJson(json: String) = fromJson<ArrayList<Game>>(
         json,
         object : TypeToken<ArrayList<Game>>() {}.type
     )
@@ -30,14 +29,14 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
 
-        val login = findViewById<Button>(R.id.login) as Button
+        val login = findViewById<Button>(R.id.login)
         login.setOnClickListener{
-            Login(username.text.toString(), password.text.toString());
+            Login(username.text.toString(), password.text.toString())
         }
 
-        val register = findViewById<Button>(R.id.register) as Button
+        val register = findViewById<Button>(R.id.register)
         register.setOnClickListener{
-            Register(username.text.toString(), password.text.toString());
+            Register(username.text.toString(), password.text.toString())
         }
 
        /* val clear = findViewById<Button>(R.id.clear) as Button
@@ -66,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         }else{
             editor.putString(username, password)
             editor.putString(userpass, json)
-            editor.apply();
+            editor.apply()
             val intent = Intent(this, CreateGameActivity::class.java).putExtra("Username", username).putExtra("Password", password)
             startActivity(intent)
         }
@@ -81,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
 
             var userpass = username+password
             var json = sharedpreferences.getString(userpass, null)
-            var gameList = json?.let { Gson().fromJson<Game>(it) }!!
+            var gameList = json?.let { Gson().fromJson(it) }!!
 
             // Welcome Message
             Toast.makeText(this, "Welcome $username!", Toast.LENGTH_SHORT).show()
@@ -135,8 +134,8 @@ class LoginActivity : AppCompatActivity() {
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setTitle("Closing Activity")
             .setMessage("Are you sure you want to exit the app?")
-            .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, which -> finish() })
+            .setPositiveButton("Yes"
+            ) { _, _ -> finish() }
             .setNegativeButton("No", null)
             .show()
     }
@@ -144,6 +143,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     companion object {
-        val mypreference = "mypref"
+        const val mypreference = "mypref"
     }
 }
